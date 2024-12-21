@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="utf-8" />
+    <title>Iniciar sesión | Login v2</title>
+    <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" name="viewport" />
+    <meta content="" name="description" />
+    <meta content="" name="author" />
+    
+    <!-- ================== BEGIN core-css ================== -->
+    <link href="assets/css/vendor.min.css" rel="stylesheet" />
+    <link href="assets/css/default/app.min.css" rel="stylesheet" />
+    <!-- ================== END core-css ================== -->
+</head>
+<body class="pace-top">
+    <!-- BEGIN #loader -->
+    <div id="loader" class="app-loader">
+        <span class="spinner"></span>
+    </div>
+    <!-- END #loader -->
+    <!-- BEGIN #app -->
+    <div id="app" class="app">
+        <!-- BEGIN login -->
+        <div class="login login-v2 fw-bold">
+            <div class="login-cover">
+                <div class="login-cover-img" style="background-image: url(assets/img/login-bg/login-bg-17.jpg)" data-id="login-cover-image"></div>
+                <div class="login-cover-bg"></div>
+            </div>
+            
+            <div class="login-container">
+                <div class="login-header">
+                    <div class="brand">
+                        <div class="d-flex align-items-center">
+                            <span class="logo"></span> <b>INICIO DE SESIÓN</b>
+                        </div>
+                        <small>NOTARÍA LOS GALÁCTICOS</small>
+                    </div>
+                    <div class="icon">
+                        <img src="assets/img/lock.png" alt="Ícono de candado" style="width: 50px; height: 50px;" />
+                    </div>
+                </div>
+                
+                <div class="login-content">
+                    <form id="loginForm" action="panel.html" method="POST" onsubmit="return validateForm()">
+                        <div class="form-floating mb-20px">
+                            <input type="text" class="form-control fs-13px h-45px border-0" placeholder="Correo electrónico" id="email" name="email" required />
+                            <label for="email" class="d-flex align-items-center text-gray-600 fs-13px">Correo electrónico</label>
+                        </div>
+                        <div class="form-floating mb-20px">
+                            <input type="password" class="form-control fs-13px h-45px border-0" placeholder="Contraseña" id="password" name="password" required />
+                            <label for="password" class="d-flex align-items-center text-gray-600 fs-13px">Contraseña</label>
+                        </div>
+                        <div class="form-check mb-20px">
+                            <input class="form-check-input border-0" type="checkbox" id="rememberMe" />
+                            <label class="form-check-label fs-13px text-gray-500" for="rememberMe">
+                                Recordar contraseña
+                            </label>
+                        </div>
+                        <div class="mb-20px">
+                            <button type="submit" class="btn btn-theme d-block w-100 h-45px btn-lg">Iniciar sesión</button>
+                        </div>
+                        <div class="text-gray-500">
+                            ¿Aún no eres miembro? Haga clic <a href="register_v3.html" class="text-white">aquí</a> para registrarse.
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Validación de formulario con JavaScript -->
+    <script type="text/javascript">
+        function validateForm() {
+            const email = document.getElementById("email").value;
+            const password = document.getElementById("password").value;
+
+            if (!email || !password) {
+                alert("Por favor, complete todos los campos.");
+                return false;
+            }
+
+            const emailPattern = /^[^@\s]+@[^@\s]+\.[^@\s]+$/;
+            if (!emailPattern.test(email)) {
+                alert("Ingrese un correo electrónico válido.");
+                return false;
+            }
+
+            return true;
+        }
+    </script>
+    <script src="assets/js/vendor.min.js"></script>
+    <script src="assets/js/app.min.js"></script>
+</body>
+</html>

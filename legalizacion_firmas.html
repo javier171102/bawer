@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Testigos y Legalización</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        /* Estilos globales */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f7fc;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .container {
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 600px;
+            padding: 40px;
+            box-sizing: border-box;
+        }
+
+        h2 {
+            text-align: center;
+            margin-bottom: 20px;
+            color: #333;
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        label {
+            font-size: 1rem;
+            color: #555;
+            font-weight: bold;
+            margin-bottom: 8px;
+            display: block;
+        }
+
+        input[type="text"],
+        input[type="tel"],
+        input[type="file"],
+        textarea {
+            width: 100%;
+            padding: 12px;
+            border-radius: 8px;
+            border: 1px solid #ccc;
+            font-size: 1rem;
+            color: #555;
+            margin-top: 6px;
+            transition: border 0.3s ease;
+        }
+
+        input[type="text"]:focus,
+        input[type="tel"]:focus,
+        textarea:focus {
+            border-color: #4CAF50;
+            outline: none;
+        }
+
+        button[type="submit"] {
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            padding: 12px;
+            font-size: 1.1rem;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        button[type="submit"]:hover {
+            background-color: #45a049;
+        }
+
+        .back-btn {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .back-btn a {
+            color: #4CAF50;
+            font-size: 1.1rem;
+            text-decoration: none;
+        }
+
+        .back-btn a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h2>Formulario de Testigos y Legalización</h2>
+        <form id="form" action="guardar_legalizacion.php" method="POST" enctype="multipart/form-data">
+            <!-- Nombre del Testigo -->
+            <div class="form-group">
+                <label for="nombre_testigo">Nombre del Testigo</label>
+                <input type="text" id="nombre_testigo" name="nombre_testigo" placeholder="Ingrese el nombre completo del testigo" required>
+            </div>
+
+            <!-- DNI del Testigo -->
+            <div class="form-group">
+                <label for="dni_testigo">DNI del Testigo</label>
+                <input type="text" id="dni_testigo" name="dni_testigo" placeholder="Ingrese el DNI del testigo" required>
+            </div>
+
+            <!-- Tipo de Documento -->
+            <div class="form-group">
+                <label for="tipo_documento">Tipo de Documento</label>
+                <select id="tipo_documento" name="tipo_documento" required>
+                    <option value="">Selecciona el tipo de documento</option>
+                    <option value="Escritura Pública">Escritura Pública</option>
+                    <option value="Contrato">Contrato</option>
+                    <option value="Acta">Acta</option>
+                    <option value="Otro">Otro</option>
+                </select>
+            </div>
+
+            <!-- Documento de la Legalización -->
+            <div class="form-group">
+                <label for="documento">Subir Documento de la Legalización</label>
+                <input type="file" id="documento" name="documento" accept=".pdf,.doc,.docx" required>
+            </div>
+
+            <!-- Firma del Testigo -->
+            <div class="form-group">
+                <label for="firma_testigo">Subir Firma del Testigo</label>
+                <input type="file" id="firma_testigo" name="firma_testigo" accept="image/*" required>
+            </div>
+
+            <!-- Observaciones -->
+            <div class="form-group">
+                <label for="observaciones">Observaciones</label>
+                <textarea id="observaciones" name="observaciones" rows="4" placeholder="Ingrese alguna observación..."></textarea>
+            </div>
+
+            <!-- Enviar -->
+            <button type="submit">Registrar Legalización</button>
+        </form>
+
+        <!-- Regresar al panel -->
+        <div class="back-btn">
+            <a href="panel.html">Regresar al Panel</a>
+        </div>
+    </div>
+</body>
+
+</html>

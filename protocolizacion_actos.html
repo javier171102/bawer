@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Protocolización de Actos Jurídicos</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        /* Estilos globales */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f7fc;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .container {
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 600px;
+            padding: 40px;
+            box-sizing: border-box;
+        }
+
+        h2 {
+            text-align: center;
+            margin-bottom: 20px;
+            color: #333;
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        label {
+            font-size: 1rem;
+            color: #555;
+            font-weight: bold;
+            margin-bottom: 8px;
+            display: block;
+        }
+
+        input[type="text"],
+        input[type="file"],
+        textarea,
+        select {
+            width: 100%;
+            padding: 12px;
+            border-radius: 8px;
+            border: 1px solid #ccc;
+            font-size: 1rem;
+            color: #555;
+            margin-top: 6px;
+            transition: border 0.3s ease;
+        }
+
+        input[type="text"]:focus,
+        input[type="file"]:focus,
+        textarea:focus,
+        select:focus {
+            border-color: #4CAF50;
+            outline: none;
+        }
+
+        button[type="submit"] {
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            padding: 12px;
+            font-size: 1.1rem;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        button[type="submit"]:hover {
+            background-color: #45a049;
+        }
+
+        .back-btn {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .back-btn a {
+            color: #4CAF50;
+            font-size: 1.1rem;
+            text-decoration: none;
+        }
+
+        .back-btn a:hover {
+            text-decoration: underline;
+        }
+
+        .error-message {
+            color: #f44336;
+            font-size: 0.875rem;
+            margin-top: 5px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h2>Formulario de Protocolización de Actos Jurídicos</h2>
+        <form id="form" action="guardar_protocolizacion.php" method="POST" enctype="multipart/form-data">
+            <!-- Nombre -->
+            <div class="form-group">
+                <label for="nombre">Nombre Completo</label>
+                <input type="text" id="nombre" name="nombre" placeholder="Ingrese su nombre completo" required>
+                <div class="error-message" id="error-nombre"></div>
+            </div>
+
+            <!-- DNI -->
+            <div class="form-group">
+                <label for="dni">DNI</label>
+                <input type="text" id="dni" name="dni" placeholder="Ingrese su número de DNI" required>
+                <div class="error-message" id="error-dni"></div>
+            </div>
+
+            <!-- Tipo de Acto Jurídico -->
+            <div class="form-group">
+                <label for="tipo_acto">Tipo de Acto Jurídico</label>
+                <select id="tipo_acto" name="tipo_acto" required>
+                    <option value="Contratos">Contratos</option>
+                    <option value="Testamentos">Testamentos</option>
+                    <option value="Poderes">Poderes</option>
+                    <option value="Actos de Propiedad">Actos de Propiedad</option>
+                    <option value="Otros">Otros</option>
+                </select>
+                <div class="error-message" id="error-tipo_acto"></div>
+            </div>
+
+            <!-- Subir Documento -->
+            <div class="form-group">
+                <label for="documento">Subir Documento</label>
+                <input type="file" id="documento" name="documento" accept=".pdf,.doc,.docx" required>
+                <div class="error-message" id="error-documento"></div>
+            </div>
+
+            <!-- Observaciones -->
+            <div class="form-group">
+                <label for="observaciones">Observaciones</label>
+                <textarea id="observaciones" name="observaciones" rows="4" placeholder="Ingrese observaciones adicionales..." required></textarea>
+            </div>
+
+            <!-- Enviar -->
+            <button type="submit">Registrar Acto Jurídico</button>
+        </form>
+
+        <!-- Regresar al panel -->
+        <div class="back-btn">
+            <a href="panel.html"><i class="fas fa-arrow-left"></i> Regresar al Panel</a>
+        </div>
+    </div>
+
+    <script>
+        // Validación de formulario
+        document.getElementById('form').addEventListener('submit', function (e) {
+            let valid = true;
+
+            // Validar Nombre
+            let nombre = document.getElementById('nombre');
+            if (nombre.value.trim() === '') {
+                document.getElementById('error-nombre').textContent = "El nombre es obligatorio.";
+                nombre.classList.add('error');
+                valid = false;
+            } else {
+                document.getElementById('error-nombre').textContent = '';
+                nombre.classList.remove('error');
+            }
+
+            // Validar DNI
+            let dni = document.getElementById('dni');
+            if (dni.value.trim() === '') {
+                document.getElementById('error-dni').textContent = "El DNI es obligatorio.";
+                dni.classList.add('error');
+                valid = false;
+            } else {
+                document.getElementById('error-dni').textContent = '';
+                dni.classList.remove('error');
+            }
+
+            // Validar Tipo de Acto Jurídico
+            let tipo_acto = document.getElementById('tipo_acto');
+            if (tipo_acto.value.trim() === '') {
+                document.getElementById('error-tipo_acto').textContent = "Debe seleccionar el tipo de acto jurídico.";
+                tipo_acto.classList.add('error');
+                valid = false;
+            } else {
+                document.getElementById('error-tipo_acto').textContent = '';
+                tipo_acto.classList.remove('error');
+            }
+
+            // Validar Documento
+            let documento = document.getElementById('documento');
+            if (!documento.files.length) {
+                document.getElementById('error-documento').textContent = "Debe subir el documento.";
+                documento.classList.add('error');
+                valid = false;
+            } else {
+                document.getElementById('error-documento').textContent = '';
+                documento.classList.remove('error');
+            }
+
+            // Prevenir el envío si no es válido
+            if (!valid) {
+                e.preventDefault();
+            }
+        });
+    </script>
+
+</body>
+
+</html>

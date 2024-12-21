@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Actas de Reunión</title>
+    <link rel="stylesheet" href="actas.css">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;600&display=swap" rel="stylesheet">
+</head>
+
+<body>
+    <main>
+        <div class="form-container">
+            <form id="reunionForm">
+                <div class="form-group">
+                    <label for="reunion-fecha">Fecha:</label>
+                    <input type="date" id="reunion-fecha" required>
+                </div>
+                <div class="form-group">
+                    <label for="reunion-hora">Hora:</label>
+                    <input type="time" id="reunion-hora" required>
+                </div>
+                <div class="form-group">
+                    <label for="reunion-lugar">Lugar:</label>
+                    <input type="text" id="reunion-lugar" required placeholder="Ingresa el lugar de la reunión">
+                </div>
+                <div class="form-group">
+                    <label for="temas-tratados">Tema a tratar:</label>
+                    <textarea id="temas-tratados" required placeholder="Describe el tema a tratar..."></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="observaciones-actas">Observaciones:</label>
+                    <textarea id="observaciones-actas" placeholder="Observaciones importantes..."></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="asistentes">Correos Electrónicos de Asistentes:</label>
+                    <textarea id="asistentes" required
+                        placeholder="Ej. nombre@example.com, otro@example.com"></textarea>
+                </div>
+                <div class="button-container">
+                    <button type="submit">Enviar</button>
+                    <button type="button" onclick="window.location.href='../panel.html'">Salir</button>
+                </div>
+            </form>
+        </div>
+    </main>
+
+    <script>
+        document.getElementById('reunionForm').onsubmit = async (event) => {
+            event.preventDefault();  // Evita que el formulario se envíe de forma tradicional
+
+            const fecha = document.getElementById("reunion-fecha").value;
+            const hora = document.getElementById("reunion-hora").value;
+            const lugar = document.getElementById("reunion-lugar").value;
+            const tema = document.getElementById("temas-tratados").value;
+            const observaciones = document.getElementById("observaciones-actas").value;
+            const asistentes = document.getElementById("asistentes").value;
+
+            // Verifica que todos los campos necesarios están llenos
+            if (!fecha || !hora || !lugar || !tema || !asistentes) {
+                alert("Por favor, completa todos los campos requeridos.");
+                return;
+            }
+
+            // Crear el mensaje
+            const message = `Reunión: ${tema}\nFecha: ${fecha}\nHora: ${hora}\nLugar: ${lugar}\nObservaciones: ${observaciones}\nAsistentes: ${asistentes}`;
+
+            try {
+                const response = await fetch('http://localhost:10000/send-email', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        fecha,
+                        hora,
+                        lugar,
+                        tema,
+                        observaciones,
+                        asistentes
+                    })
+                });
+                const data = await response.text();
+
+
+                // Limpia los campos del formulario después de un envío exitoso
+                document.getElementById("reunion-fecha").value = "";
+                document.getElementById("reunion-hora").value = "";
+                document.getElementById("reunion-lugar").value = "";
+                document.getElementById("temas-tratados").value = "";
+                document.getElementById("observaciones-actas").value = "";
+                document.getElementById("asistentes").value = "";
+            } catch (error) {
+                console.error('Error al enviar el correo:', error);
+                alert('Hubo un problema al enviar el correo. Por favor, inténtalo de nuevo.');
+            }
+        };
+    </script>
+</body>
+
+</html>

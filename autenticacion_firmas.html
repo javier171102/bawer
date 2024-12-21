@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Autenticación de Firmas</title>
+
+    <!-- Estilos embebidos en el archivo HTML -->
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            background-color: #f4f6f9;
+        }
+
+        .container {
+            width: 80%;
+            max-width: 1200px;
+            margin-top: 40px;
+            padding: 20px;
+            background-color: white;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+        }
+
+        h2 {
+            text-align: center;
+            color: #2c3e50;
+            margin-bottom: 20px;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        label {
+            font-weight: bold;
+            display: block;
+            color: #34495e;
+        }
+
+        input[type="text"],
+        input[type="tel"],
+        input[type="file"],
+        textarea {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 14px;
+            margin-top: 5px;
+        }
+
+        textarea {
+            resize: vertical;
+            min-height: 100px;
+        }
+
+        button {
+            background-color: #3498db;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+            margin-top: 20px;
+            display: block;
+            width: 100%;
+        }
+
+        button:hover {
+            background-color: #2980b9;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 40px;
+        }
+
+        th,
+        td {
+            border: 1px solid #ddd;
+            padding: 10px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #2c3e50;
+            color: white;
+        }
+
+        tbody tr:hover {
+            background-color: #f1f1f1;
+        }
+
+        img {
+            max-width: 100px;
+        }
+
+        a {
+            color: #3498db;
+            text-decoration: none;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+
+        .back-link {
+            margin-top: 20px;
+            text-align: center;
+        }
+
+        .back-link a {
+            color: #2c3e50;
+            text-decoration: none;
+            font-size: 18px;
+            padding: 10px;
+            background-color: #ecf0f1;
+            border-radius: 4px;
+        }
+
+        .back-link a:hover {
+            background-color: #bdc3c7;
+        }
+    </style>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+
+<body>
+    <div class="container">
+        <h2>Formulario de Autenticación de Firmas</h2>
+        <form id="form" enctype="multipart/form-data">
+            <div class="form-group">
+                <label for="nombre">Nombre Completo</label>
+                <input type="text" id="nombre" name="nombre" placeholder="Ingrese su nombre completo" required>
+            </div>
+            <div class="form-group">
+                <label for="dni">DNI</label>
+                <input type="text" id="dni" name="dni" placeholder="Ingrese su número de DNI" required>
+            </div>
+            <div class="form-group">
+                <label for="direccion">Dirección</label>
+                <input type="text" id="direccion" name="direccion" placeholder="Ingrese su dirección" required>
+            </div>
+            <div class="form-group">
+                <label for="telefono">Teléfono</label>
+                <input type="tel" id="telefono" name="telefono" placeholder="Ingrese su teléfono" required>
+            </div>
+            <div class="form-group">
+                <label for="firma">Subir Firma (Imagen)</label>
+                <input type="file" id="firma" name="firma" accept="image/*" required>
+            </div>
+            <div class="form-group">
+                <label for="documento">Documento a Firmar (PDF, DOC)</label>
+                <input type="file" id="documento" name="documento" accept=".pdf,.doc,.docx" required>
+            </div>
+            <div class="form-group">
+                <label for="notas">Notas Adicionales</label>
+                <textarea id="notas" name="notas" rows="4" placeholder="Ingrese notas adicionales..."></textarea>
+            </div>
+            <button type="submit" id="submit-btn">Autenticar Firma</button>
+
+            <!-- Enlace para regresar al panel, ahora debajo del botón -->
+            <div class="back-link">
+                <a href="panel.html">Regresar al Panel</a>
+            </div>
+        </form>
+
+        <div id="data-table">
+            <h3>Datos Guardados</h3>
+            <table id="tabla-datos" border="1">
+                <thead>
+                    <tr>
+                        <th>Nombre</th>
+                        <th>DNI</th>
+                        <th>Dirección</th>
+                        <th>Teléfono</th>
+                        <th>Firma</th>
+                        <th>Documento</th>
+                        <th>Notas</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- Aquí se insertarán los datos con Ajax -->
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <script>
+        $(document).ready(function () {
+            $('#form').on('submit', function (e) {
+                e.preventDefault(); // Prevenir el comportamiento por defecto del formulario
+
+                var formData = new FormData(this);
+
+                $.ajax({
+                    url: 'guardar_firmas.php',
+                    type: 'POST',
+                    data: formData,
+                    contentType: false,
+                    processData: false,
+                    success: function (response) {
+                        alert(response.message); // Mostrar respuesta del servidor
+                        cargarDatos(); // Recargar los datos mostrados
+                        $('#form')[0].reset(); // Limpiar el formulario
+                    },
+                    error: function (xhr, status, error) {
+                        alert("Error: " + error);
+                    }
+                });
+            });
+
+            function cargarDatos() {
+                $.ajax({
+                    url: 'guardar_firmas.php',
+                    type: 'GET',
+                    success: function (response) {
+                        const data = JSON.parse(response);
+                        let tableContent = '';
+                        data.forEach(row => {
+                            tableContent += `
+                                <tr>
+                                    <td>${row.nombre}</td>
+                                    <td>${row.dni}</td>
+                                    <td>${row.direccion}</td>
+                                    <td>${row.telefono}</td>
+                                    <td><img src="${row.firma}" alt="Firma"></td>
+                                    <td><a href="${row.documento}" target="_blank">Ver Documento</a></td>
+                                    <td>${row.notas}</td>
+                                </tr>
+                            `;
+                        });
+                        $('#tabla-datos tbody').html(tableContent); // Insertar los datos en la tabla
+                    }
+                });
+            }
+
+            cargarDatos(); // Cargar los datos al inicio
+        });
+    </script>
+</body>
+
+</html>

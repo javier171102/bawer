@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <title>Registrarce | Register v3</title>
+    <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" name="viewport" />
+    <meta content="" name="description" />
+    <meta content="" name="author" />
+    <!-- ================== BEGIN core-css ================== -->
+    <link href="assets/css/vendor.min.css" rel="stylesheet" />
+    <link href="assets/css/default/app.min.css" rel="stylesheet" />
+    <!-- ================== END core-css ================== -->
+</head>
+
+<body class='pace-top'>
+    <!-- BEGIN #loader -->
+    <div id="loader" class="app-loader">
+        <span class="spinner"></span>
+    </div>
+    <!-- END #loader -->
+
+
+    <!-- BEGIN #app -->
+    <div id="app" class="app">
+        <!-- BEGIN register -->
+        <div class="register register-with-news-feed">
+            <!-- BEGIN news-feed -->
+            <div class="news-feed">
+                <div class="news-image" style="background-image: url(../assets/img/login-bg/login-bg-15.jpg)"></div>
+                <div class="news-caption">
+                    <h4 class="caption-title"><b>Notaria</b> Los Galácticos</h4>
+                    <p>
+                        A través de la formalización de acuerdos y contratos, la notaría asegura el cumplimiento de las normativas legales y el fortalecimiento de la confianza entre las partes involucradas, contribuyendo así al éxito del proyecto en la prevención y mitigación de desastres.
+                    </p>
+                </div>
+            </div>
+            <!-- END news-feed -->
+
+            <!-- BEGIN register-container -->
+            <div class="register-container">
+                <!-- BEGIN register-header -->
+                <div class="register-header mb-25px h1">
+                    <div class="mb-1">Registrate</div>
+                    <small class="d-block fs-15px lh-16">Crea tu cuenta en esta Notaria es fácil y sencillo</small>
+                </div>
+                <!-- END register-header -->
+
+                <!-- BEGIN register-content -->
+                <div class="register-content">
+                    <form action="register.php" method="POST" class="fs-13px">
+                        <div class="mb-3">
+                            <label class="mb-2">Nombre <span class="text-danger">*</span></label>
+                            <div class="row gx-3">
+                                <div class="col-md-6 mb-2 mb-md-0">
+                                    <input type="text" class="form-control fs-13px" name="nombre" placeholder="Nombres" required />
+                                </div>
+                                <div class="col-md-6">
+                                    <input type="text" class="form-control fs-13px" name="apellido" placeholder="Apellidos" required />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <label class="mb-2">Email <span class="text-danger">*</span></label>
+                            <input type="email" class="form-control fs-13px" name="email" placeholder="Correo electrónico" required />
+                        </div>
+                        <div class="mb-3">
+                            <label class="mb-2">DNI <span class="text-danger">*</span></label>
+                            <input type="text" class="form-control fs-13px" name="dni" placeholder="DNI" required />
+                        </div>
+                        <label class="mb-2">Télefono <span class="text-danger">*</span></label>
+                        <input type="text" class="form-control fs-13px" name="telefono" placeholder="Número telefónico" required />
+                        <div class="mb-4">
+                            <label class="mb-2">Contraseña <span class="text-danger">*</span></label>
+                            <input type="password" class="form-control fs-13px" name="contraseña" placeholder="Ingrese la contraseña" required />
+                        </div>
+                        <div class="form-check mb-4">
+                            <input class="form-check-input" type="checkbox" value="" id="agreementCheckbox" />
+                            <label class="form-check-label" for="agreementCheckbox">
+                                Al hacer clic en Registrarse, acepta nuestros <a href="javascript:;">Términos</a> y que ha leído nuestra <a href="javascript:;">Pólitica de seguridad</a>, incluyendo nuestro <a href="javascript:;">Uso de Cookies</a>.
+                            </label>
+                        </div>
+                        <div class="mb-4">
+                            <button type="submit" class="btn btn-theme d-block w-100 btn-lg h-45px fs-13px">Registrarce</button>
+                        </div>
+                        <div class="mb-4 pb-5">
+                            ¿Ya eres miembro? Haga clic <a href="index.html">aquí</a> para iniciar sesión.
+                        </div>
+                    </form>
+                </div>
+                <!-- END register-content -->
+            </div>
+            <!-- END register-container -->
+        </div>
+        <!-- END register -->
+    </div>
+    <!-- END #app -->
+
+    <!-- ================== BEGIN core-js ================== -->
+    <script src="assets/js/vendor.min.js"></script>
+    <script src="assets/js/app.min.js"></script>
+    <!-- ================== END core-js ================== -->
+</body>
+
+</html>

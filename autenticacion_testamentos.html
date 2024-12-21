@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Autenticación de Testamentos</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        /* Estilos globales */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f7fc;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .container {
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 600px;
+            padding: 40px;
+            box-sizing: border-box;
+        }
+
+        h2 {
+            text-align: center;
+            margin-bottom: 20px;
+            color: #333;
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        label {
+            font-size: 1rem;
+            color: #555;
+            font-weight: bold;
+            margin-bottom: 8px;
+            display: block;
+        }
+
+        input[type="text"],
+        input[type="file"],
+        input[type="tel"],
+        select,
+        textarea {
+            width: 100%;
+            padding: 12px;
+            border-radius: 8px;
+            border: 1px solid #ccc;
+            font-size: 1rem;
+            color: #555;
+            margin-top: 6px;
+            transition: border 0.3s ease;
+        }
+
+        input[type="text"]:focus,
+        input[type="file"]:focus,
+        input[type="tel"]:focus,
+        select:focus,
+        textarea:focus {
+            border-color: #4CAF50;
+            outline: none;
+        }
+
+        .form-group input[type="file"] {
+            border: none;
+        }
+
+        button[type="submit"] {
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            padding: 12px;
+            font-size: 1.1rem;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        button[type="submit"]:hover {
+            background-color: #45a049;
+        }
+
+        .back-btn {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .back-btn a {
+            color: #4CAF50;
+            font-size: 1.1rem;
+            text-decoration: none;
+        }
+
+        .back-btn a:hover {
+            text-decoration: underline;
+        }
+
+        /* Estilo para los campos de entrada de validación */
+        .error {
+            border-color: #f44336;
+        }
+
+        .error-message {
+            color: #f44336;
+            font-size: 0.875rem;
+            margin-top: 5px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h2>Formulario de Autenticación de Testamentos</h2>
+        <form id="form" action="guardar_testamento.php" method="POST" enctype="multipart/form-data">
+            <!-- Nombre -->
+            <div class="form-group">
+                <label for="nombre">Nombre Completo</label>
+                <input type="text" id="nombre" name="nombre" placeholder="Ingrese su nombre completo" required>
+                <div class="error-message" id="error-nombre"></div>
+            </div>
+
+            <!-- DNI -->
+            <div class="form-group">
+                <label for="dni">DNI</label>
+                <input type="text" id="dni" name="dni" placeholder="Ingrese su número de DNI" required>
+                <div class="error-message" id="error-dni"></div>
+            </div>
+
+            <!-- Tipo de Testamento -->
+            <div class="form-group">
+                <label for="tipo_testamento">Tipo de Testamento</label>
+                <select id="tipo_testamento" name="tipo_testamento" required>
+                    <option value="">Seleccione el tipo de testamento</option>
+                    <option value="Testamento Público">Testamento Público</option>
+                    <option value="Testamento Cerrado">Testamento Cerrado</option>
+                    <option value="Testamento Ológrafo">Testamento Ológrafo</option>
+                    <option value="Testamento Abierto">Testamento Abierto</option>
+                    <option value="Codicilo">Codicilo</option>
+                </select>
+                <div class="error-message" id="error-tipo_testamento"></div>
+            </div>
+
+            <!-- Subir Testamento -->
+            <div class="form-group">
+                <label for="testamento">Subir Testamento</label>
+                <input type="file" id="testamento" name="testamento" accept=".pdf,.doc,.docx" required>
+                <div class="error-message" id="error-testamento"></div>
+            </div>
+
+            <!-- Observaciones -->
+            <div class="form-group">
+                <label for="observaciones">Observaciones</label>
+                <textarea id="observaciones" name="observaciones" rows="4" placeholder="Ingrese observaciones adicionales..."></textarea>
+            </div>
+
+            <!-- Enviar -->
+            <button type="submit">Autenticar Testamento</button>
+        </form>
+
+        <div class="back-btn">
+            <a href="panel.html"><i class="fas fa-arrow-left"></i> Regresar al Panel</a>
+        </div>
+    </div>
+
+    <script>
+        // Validación y scripts de formulario igual que en los ejemplos anteriores.
+    </script>
+
+</body>
+
+</html>

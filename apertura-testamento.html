@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Apertura de Testamento - Notaría</title>
+    <link rel="stylesheet" href="apertura-testamento.css">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;600&display=swap" rel="stylesheet">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <style>
+        /* Ajustes para que el formulario se muestre correctamente */
+        .form-container, .data-container {
+            max-width: 800px;
+            margin: 20px auto;
+            background-color: #f9f9f9;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            font-family: 'Montserrat', sans-serif;
+        }
+
+        h2 {
+            text-align: center;
+            color: #333;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            color: #555;
+        }
+
+        .form-group input, 
+        .form-group textarea, 
+        .form-group select {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 16px;
+        }
+
+        .button-container {
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .button-container button {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            background-color: #5cb85c;
+            color: white;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        .button-container button:nth-child(2) {
+            background-color: #d9534f;
+        }
+
+        /* Estilo para la tabla */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        table th, table td {
+            border: 1px solid #ddd;
+            padding: 10px;
+            text-align: left;
+            font-size: 14px;
+        }
+
+        table th {
+            background-color: #5cb85c;
+            color: white;
+        }
+
+        table tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+
+        table tr:hover {
+            background-color: #ddd;
+        }
+    </style>
+</head>
+<body>
+    <main>
+        <div class="form-container">
+            <h2>Apertura de Testamento</h2>
+            <form id="apertura-testamento-form">
+                <!-- Campos del formulario -->
+                <div class="form-group">
+                    <label for="solicitante-nombre">Nombre del solicitante:</label>
+                    <input type="text" id="solicitante-nombre" name="solicitante-nombre" required>
+                </div>
+                <div class="form-group">
+                    <label for="solicitante-dni">DNI:</label>
+                    <input type="text" id="solicitante-dni" name="solicitante-dni" required>
+                </div>
+                <div class="form-group">
+                    <label for="solicitante-telefono">Teléfono:</label>
+                    <input type="tel" id="solicitante-telefono" name="solicitante-telefono" required>
+                </div>
+                <div class="form-group">
+                    <label for="solicitante-direccion">Dirección:</label>
+                    <input type="text" id="solicitante-direccion" name="solicitante-direccion" required>
+                </div>
+                <div class="form-group">
+                    <label for="fallecido-nombre">Nombre del fallecido:</label>
+                    <input type="text" id="fallecido-nombre" name="fallecido-nombre" required>
+                </div>
+                <div class="form-group">
+                    <label for="fallecido-dni">DNI:</label>
+                    <input type="text" id="fallecido-dni" name="fallecido-dni" required>
+                </div>
+                <div class="form-group">
+                    <label for="fecha-fallecimiento">Fecha de fallecimiento:</label>
+                    <input type="date" id="fecha-fallecimiento" name="fecha-fallecimiento" required>
+                </div>
+                <div class="form-group">
+                    <label for="tipo-testamento">Tipo de testamento:</label>
+                    <select id="tipo-testamento" name="tipo-testamento" required>
+                        <option value="publico">Público</option>
+                        <option value="cerrado">Cerrado</option>
+                        <option value="olografo">Ológrafo</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="observaciones">Observaciones:</label>
+                    <textarea id="observaciones" name="observaciones" rows="4"></textarea>
+                </div>
+                <div class="button-container">
+                    <button type="submit">Enviar</button>
+                    <button type="button" onclick="window.location.href='../panel.html'">Salir</button>
+                </div>
+            </form>
+        </div>
+        <div class="data-container">
+            <h2>Datos Guardados</h2>
+            <table id="data-table">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Nombre del Solicitante</th>
+                        <th>DNI</th>
+                        <th>Teléfono</th>
+                        <th>Dirección</th>
+                        <th>Nombre del Fallecido</th>
+                        <th>DNI Fallecido</th>
+                        <th>Fecha de Fallecimiento</th>
+                        <th>Tipo de Testamento</th>
+                        <th>Observaciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- Filas generadas dinámicamente -->
+                </tbody>
+            </table>
+        </div>
+    </main>
+
+    <script>
+        $(document).ready(function () {
+            $('#apertura-testamento-form').submit(function (e) {
+                e.preventDefault();
+
+                $.ajax({
+                    url: 'guardar_testamento2.php',
+                    type: 'POST',
+                    data: $(this).serialize(),
+                    success: function (response) {
+                        const res = JSON.parse(response);
+                        alert(res.message);
+                        if (res.status === "success") {
+                            loadTableData();
+                            $('#apertura-testamento-form')[0].reset();
+                        }
+                    },
+                    error: function () {
+                        alert('Error al guardar los datos.');
+                    }
+                });
+            });
+
+            function loadTableData() {
+                $.ajax({
+                    url: 'guardar_testamento2.php',
+                    type: 'GET',
+                    success: function (response) {
+                        const data = JSON.parse(response);
+                        const tableBody = $('#data-table tbody');
+                        tableBody.empty();
+                        data.forEach(row => {
+                            tableBody.append(`
+                                <tr>
+                                    <td>${row.id}</td>
+                                    <td>${row.solicitante_nombre}</td>
+                                    <td>${row.solicitante_dni}</td>
+                                    <td>${row.solicitante_telefono}</td>
+                                    <td>${row.solicitante_direccion}</td>
+                                    <td>${row.fallecido_nombre}</td>
+                                    <td>${row.fallecido_dni}</td>
+                                    <td>${row.fecha_fallecimiento}</td>
+                                    <td>${row.tipo_testamento}</td>
+                                    <td>${row.observaciones}</td>
+                                </tr>
+                            `);
+                        });
+                    },
+                    error: function () {
+                        alert('Error al cargar los datos.');
+                    }
+                });
+            }
+
+            loadTableData();
+        });
+    </script>
+</body>
+</html>

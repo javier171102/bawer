@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Verificación de Identidad</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <h1>Verificación de Identidad</h1>
+    <form>
+        <label for="consultante-nombre">Nombre del solicitante:</label>
+        <input type="text" id="consultante-nombre" required>
+
+        <label for="consultante-dni">DNI:</label>
+        <input type="text" id="consultante-dni" required>
+
+        <label for="consultante-fecha">Fecha de nacimiento:</label>
+        <input type="date" id="consultante-fecha" required>
+
+        <label for="consultante-direccion">Dirección:</label>
+        <input type="text" id="consultante-direccion" required>
+
+        <label>Documentación presentada:</label>
+        <ul>
+            <li><input type="checkbox"> DNI</li>
+            <li><input type="checkbox"> Pasaporte</li>
+            <li><input type="checkbox"> Otro (especificar)</li>
+            <input type="text" placeholder="Especificar otro" style="width: 100%; margin-top: 5px;">
+        </ul>
+
+        <label for="motivo-verificacion">Motivo de la verificación:</label>
+        <textarea id="motivo-verificacion"></textarea>
+
+        <button type="submit">Enviar</button>
+    </form>
+</body>
+</html>

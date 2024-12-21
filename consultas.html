@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Consulta de Estado del Documento Notarial</title>
+    <link rel="stylesheet" href="styles2.css">
+</head>
+<body>
+<main>
+    <div class="form-container">
+        <h2>Ingrese su DNI para la consulta</h2>
+        <form id="consulta-form">
+            <!-- DNI -->
+            <div class="form-group">
+                <label for="consulta-dni">Número de DNI:</label>
+                <input type="text" id="consulta-dni" placeholder="Ingrese su DNI (8 dígitos)" maxlength="8" required>
+            </div>
+            <!-- Botón de Consultar -->
+            <div class="button-container">
+                <button type="submit">Consultar</button>
+                <button type="button" id="salir-btn">Salir</button>
+            </div>
+        </form>
+
+        <!-- Contenedor para mostrar los resultados -->
+        <div id="resultados-container" style="display:none;">
+            <h3>Resultados de la consulta:</h3>
+            <table id="documentos-table">
+                <thead>
+                    <tr>
+                        <th>Origen</th>
+                        <th>Nombre</th>
+                        <th>DNI</th>
+                        <th>Tipo</th>
+                        <th>Documento</th>
+                    </tr>
+                </thead>
+                <tbody id="documentos-lista"></tbody>
+            </table>
+        </div>
+    </div>
+</main>
+<script src="consultas.js"></script>
+</body>
+</html>

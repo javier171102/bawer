@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Certificación de Copias</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        /* Estilos globales */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f7fc;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .container {
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 600px;
+            padding: 40px;
+            box-sizing: border-box;
+        }
+
+        h2 {
+            text-align: center;
+            margin-bottom: 20px;
+            color: #333;
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        label {
+            font-size: 1rem;
+            color: #555;
+            font-weight: bold;
+            margin-bottom: 8px;
+            display: block;
+        }
+
+        input[type="text"],
+        input[type="tel"],
+        input[type="file"],
+        textarea {
+            width: 100%;
+            padding: 12px;
+            border-radius: 8px;
+            border: 1px solid #ccc;
+            font-size: 1rem;
+            color: #555;
+            margin-top: 6px;
+            transition: border 0.3s ease;
+        }
+
+        input[type="text"]:focus,
+        input[type="tel"]:focus,
+        textarea:focus {
+            border-color: #4CAF50;
+            outline: none;
+        }
+
+        .form-group input[type="file"] {
+            border: none;
+        }
+
+        button[type="submit"] {
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            padding: 12px;
+            font-size: 1.1rem;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        button[type="submit"]:hover {
+            background-color: #45a049;
+        }
+
+        .back-btn {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .back-btn a {
+            color: #4CAF50;
+            font-size: 1.1rem;
+            text-decoration: none;
+        }
+
+        .back-btn a:hover {
+            text-decoration: underline;
+        }
+
+        /* Estilo para los campos de entrada de validación */
+        .error {
+            border-color: #f44336;
+        }
+
+        .error-message {
+            color: #f44336;
+            font-size: 0.875rem;
+            margin-top: 5px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h2>Formulario de Certificación de Copias</h2>
+        <form id="form" action="guardar_certificacion.php" method="POST" enctype="multipart/form-data">
+            <!-- Nombre -->
+            <div class="form-group">
+                <label for="nombre">Nombre Completo del Solicitante</label>
+                <input type="text" id="nombre" name="nombre" placeholder="Ingrese su nombre completo" required>
+                <div class="error-message" id="error-nombre"></div>
+            </div>
+
+            <!-- DNI -->
+            <div class="form-group">
+                <label for="dni">DNI del Solicitante</label>
+                <input type="text" id="dni" name="dni" placeholder="Ingrese su número de DNI" required>
+                <div class="error-message" id="error-dni"></div>
+            </div>
+
+            <!-- Tipo de Documento -->
+            <div class="form-group">
+                <label for="tipo_documento">Tipo de Documento a Certificar</label>
+                <select id="tipo_documento" name="tipo_documento" required>
+                    <option value="">Seleccione el tipo de documento</option>
+                    <option value="cedula">Cédula de Identidad</option>
+                    <option value="contrato">Contrato</option>
+                    <option value="testamento">Testamento</option>
+                    <option value="otros">Otros</option>
+                </select>
+                <div class="error-message" id="error-tipo_documento"></div>
+            </div>
+
+            <!-- Documento Original -->
+            <div class="form-group">
+                <label for="documento_original">Subir Documento Original</label>
+                <input type="file" id="documento_original" name="documento_original" accept=".pdf,.doc,.docx,.jpg,.png" required>
+                <div class="error-message" id="error-documento_original"></div>
+            </div>
+
+            <!-- Observaciones -->
+            <div class="form-group">
+                <label for="observaciones">Observaciones</label>
+                <textarea id="observaciones" name="observaciones" rows="4" placeholder="Ingrese cualquier observación relevante (opcional)"></textarea>
+            </div>
+
+            <!-- Enviar -->
+            <button type="submit">Certificar Copia</button>
+        </form>
+
+        <!-- Regresar al panel -->
+        <div class="back-btn">
+            <a href="panel.html"><i class="fas fa-arrow-left"></i> Regresar al Panel</a>
+        </div>
+    </div>
+
+    <script>
+        // Validación de formulario
+        document.getElementById('form').addEventListener('submit', function (e) {
+            let valid = true;
+
+            // Validar Nombre
+            let nombre = document.getElementById('nombre');
+            if (nombre.value.trim() === '') {
+                document.getElementById('error-nombre').textContent = "El nombre es obligatorio.";
+                nombre.classList.add('error');
+                valid = false;
+            } else {
+                document.getElementById('error-nombre').textContent = '';
+                nombre.classList.remove('error');
+            }
+
+            // Validar DNI
+            let dni = document.getElementById('dni');
+            if (dni.value.trim() === '') {
+                document.getElementById('error-dni').textContent = "El DNI es obligatorio.";
+                dni.classList.add('error');
+                valid = false;
+            } else {
+                document.getElementById('error-dni').textContent = '';
+                dni.classList.remove('error');
+            }
+
+            // Validar Tipo de Documento
+            let tipo_documento = document.getElementById('tipo_documento');
+            if (tipo_documento.value === '') {
+                document.getElementById('error-tipo_documento').textContent = "Debe seleccionar el tipo de documento a certificar.";
+                tipo_documento.classList.add('error');
+                valid = false;
+            } else {
+                document.getElementById('error-tipo_documento').textContent = '';
+                tipo_documento.classList.remove('error');
+            }
+
+            // Validar Documento Original
+            let documento_original = document.getElementById('documento_original');
+            if (!documento_original.files.length) {
+                document.getElementById('error-documento_original').textContent = "Debe subir el documento original.";
+                documento_original.classList.add('error');
+                valid = false;
+            } else {
+                document.getElementById('error-documento_original').textContent = '';
+                documento_original.classList.remove('error');
+            }
+
+            // Prevenir el envío si no es válido
+            if (!valid) {
+                e.preventDefault();
+            }
+        });
+    </script>
+
+</body>
+
+</html>
